@@ -37,7 +37,7 @@ class DoctrineMessageRepositoryTest extends MessageRepositoryTest
         return EntityManager::create(
             ['url' => 'sqlite:///:memory:'],
             Tools\Setup::createXMLMetadataConfiguration(
-                [__DIR__ . '/../../../../src/Infrastructure/Persistence/Doctrine/mapping'],
+                [__DIR__ . '/../../../../src/Infrastructure/Persistence/Doctrine/Mapping'],
                 $devMode = true
             )
         );

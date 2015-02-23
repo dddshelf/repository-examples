@@ -7,7 +7,7 @@
 
     <entity name="Domain\Model\Message" table="messages">
         <id name="id" type="message_id" column="id">
-            <generator strategy="NONE"></generator>
+            <generator strategy="NONE" />
         </id>
         <field name="body" type="body" length="250" column="body"/>
         <field name="createdAt" type="datetime" column="created_at" />
