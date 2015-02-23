@@ -8,9 +8,8 @@ use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools;
 use Domain\Model\Message;
-use Infrastructure\Persistence\MessageRepositoryTest;
 
-class DoctrineMessageRepositoryTest extends MessageRepositoryTest
+class DoctrineMessageRepositoryTest extends \MessageRepositoryTest
 {
     protected function createMessageRepository()
     {

@@ -1,7 +1,5 @@
 <?php
 
-namespace Infrastructure\Persistence;
-
 use Domain\Model\Body;
 use Domain\Model\Message;
 
