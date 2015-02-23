@@ -2,7 +2,7 @@
 
 namespace Infrastructure\Persistence\Doctrine;
 
-require __DIR__ . '/../MessageRepositoryTest.php';
+require_once __DIR__ . '/../MessageRepositoryTest.php';
 
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
