@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping
+        xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                            http://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+
+    <entity name="Domain\Model\Message" table="messages">
+        <id name="id" type="message_id" column="id">
+            <generator strategy="NONE"></generator>
+        </id>
+        <field name="body" type="body" length="250" column="body"/>
+        <field name="createdAt" type="datetime" column="created_at" />
+    </entity>
+
+</doctrine-mapping>
