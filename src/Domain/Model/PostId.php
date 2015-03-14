@@ -4,7 +4,7 @@ namespace Domain\Model;
 
 use Rhumsaa\Uuid\Uuid;
 
-class MessageId
+class PostId
 {
     private $id;
 
@@ -18,7 +18,7 @@ class MessageId
         return $this->id;
     }
 
-    public function equals(MessageId $anId)
+    public function equals(PostId $anId)
     {
         return $this->id === $anId->id();
     }

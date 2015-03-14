@@ -4,9 +4,9 @@ namespace Infrastructure\Persistence\Doctrine\Types;
 
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Domain\Model\MessageId;
+use Domain\Model\PostId;
 
-class MessageIdType extends Type
+class PostIdType extends Type
 {
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
@@ -15,15 +15,15 @@ class MessageIdType extends Type
 
     /**
      * @param string $value
-     * @return MessageId
+     * @return PostId
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return new MessageId($value);
+        return new PostId($value);
     }
 
     /**
-     * @param MessageId $value
+     * @param PostId $value
      */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
@@ -32,6 +32,6 @@ class MessageIdType extends Type
 
     public function getName()
     {
-        return 'message_id';
+        return 'post_id';
     }
 }

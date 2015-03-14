@@ -4,7 +4,7 @@ namespace Infrastructure\Persistence\Doctrine;
 
 use Doctrine\ORM\EntityManager;
 
-interface DoctrineMessageSpecification
+interface DoctrinePostSpecification
 {
     /**
      * @return \Doctrine\ORM\Query

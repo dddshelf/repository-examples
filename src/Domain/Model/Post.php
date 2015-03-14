@@ -2,7 +2,7 @@
 
 namespace Domain\Model;
 
-class Message
+class Post
 {
     const EXPIRE_EDIT_TIME = 120;//seconds
 
@@ -11,7 +11,7 @@ class Message
     private $createdAt;
 
     public function __construct(
-        MessageId $anId,
+        PostId $anId,
         Body $aBody,
         \DateTime $createdAt = null
     ) {

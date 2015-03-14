@@ -2,28 +2,28 @@
 
 namespace Infrastructure\Persistence\Doctrine;
 
-require_once __DIR__ . '/../MessageRepositoryTest.php';
+require_once __DIR__ . '/../PostRepositoryTest.php';
 
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools;
-use Domain\Model\Message;
+use Domain\Model\Post;
 
-class DoctrineMessageRepositoryTest extends \MessageRepositoryTest
+class DoctrinePostRepositoryTest extends \PostRepositoryTest
 {
-    protected function createMessageRepository()
+    protected function createPostRepository()
     {
         $this->addCustomTypes();
         $em = $this->initEntityManager();
         $this->initSchema($em);
 
-        return new PrecociousDoctrineMessageRepository($em);
+        return new PrecociousDoctrinePostRepository($em);
     }
 
     private function addCustomTypes()
     {
-        if (!Type::hasType('message_id')) {
-            Type::addType('message_id', 'Infrastructure\Persistence\Doctrine\Types\MessageIdType');
+        if (!Type::hasType('post_id')) {
+            Type::addType('post_id', 'Infrastructure\Persistence\Doctrine\Types\PostIdType');
         }
 
         if (!Type::hasType('body')) {
@@ -46,23 +46,23 @@ class DoctrineMessageRepositoryTest extends \MessageRepositoryTest
     {
         $tool = new Tools\SchemaTool($em);
         $tool->createSchema([
-            $em->getClassMetadata('Domain\Model\Message')
+            $em->getClassMetadata('Domain\Model\Post')
         ]);
     }
 }
 
-class PrecociousDoctrineMessageRepository extends DoctrineMessageRepository
+class PrecociousDoctrinePostRepository extends DoctrinePostRepository
 {
-    public function persist(Message $aMessage)
+    public function persist(Post $aPost)
     {
-        parent::persist($aMessage);
+        parent::persist($aPost);
 
         $this->em->flush();
     }
 
-    public function remove(Message $aMessage)
+    public function remove(Post $aPost)
     {
-        parent::remove($aMessage);
+        parent::remove($aPost);
 
         $this->em->flush();
     }
