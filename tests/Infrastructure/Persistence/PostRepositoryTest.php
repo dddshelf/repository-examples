@@ -22,7 +22,7 @@ abstract class PostRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldRemovePost()
     {
-        $post = $this->persistPost('irrelevant body');
+        $post = $this->persistPost();
 
         $this->postRepository->remove($post);
 
@@ -35,7 +35,7 @@ abstract class PostRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($result);
     }
 
-    private function persistPost($body, \DateTime $createdAt = null)
+    private function persistPost($body = 'irrelevant body', \DateTime $createdAt = null)
     {
         $this->postRepository->persist(
             $post = new Post(
@@ -63,5 +63,18 @@ abstract class PostRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $posts);
         $this->assertEquals('few hours ago', $posts[0]->body()->content());
         $this->assertEquals('few minutes ago', $posts[1]->body()->content());
+    }
+
+    /**
+     * @test
+     */
+    public function sizeShouldMatchNumberOfStoredPosts()
+    {
+        $this->persistPost();
+        $this->persistPost();
+
+        $size = $this->postRepository->size();
+
+        $this->assertEquals(2, $size);
     }
 }

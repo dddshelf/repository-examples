@@ -29,4 +29,9 @@ interface PostRepository
      * @return PostId
      */
     public function nextIdentity();
+
+    /**
+     * @return integer
+     */
+    public function size();
 }

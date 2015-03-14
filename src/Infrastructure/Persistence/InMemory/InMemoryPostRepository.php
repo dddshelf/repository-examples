@@ -59,4 +59,9 @@ class InMemoryPostRepository implements PostRepository
     {
         return new PostId();
     }
+
+    public function size()
+    {
+        return count($this->posts);
+    }
 }

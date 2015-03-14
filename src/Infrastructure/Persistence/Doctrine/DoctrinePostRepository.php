@@ -54,4 +54,13 @@ class DoctrinePostRepository implements PostRepository
     {
         return new PostId();
     }
+
+    public function size()
+    {
+        return $this->em->createQueryBuilder()
+            ->select('count(p.id)')
+            ->from('Domain\Model\Post', 'p')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }
