@@ -2,11 +2,11 @@
 
 namespace Infrastructure\Persistence\Doctrine;
 
-require_once __DIR__ . '/../PostRepositoryTest.php';
+require_once __DIR__ . '/../PersistentPostRepositoryTest.php';
 
 use Infrastructure\Persistence\Sql\SqlPostRepository;
 
-class SqlPostRepositoryTest extends \PostRepositoryTest
+class SqlPostRepositoryTest extends \PersistentPostRepositoryTest
 {
     protected function createPostRepository()
     {

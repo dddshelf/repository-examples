@@ -4,13 +4,13 @@ namespace Infrastructure\Persistence\InMemory;
 
 use Domain\Model\Post;
 use Domain\Model\PostId;
-use Domain\Model\PostRepository;
+use Domain\Model\CollectionPostRepository as PostRepository;
 
 class InMemoryPostRepository implements PostRepository
 {
     private $posts = [];
 
-    public function persist(Post $aPost)
+    public function add(Post $aPost)
     {
         $this->posts[$aPost->id()->id()] = $aPost;
     }

@@ -2,14 +2,14 @@
 
 namespace Infrastructure\Persistence\Doctrine;
 
-require_once __DIR__ . '/../PostRepositoryTest.php';
+require_once __DIR__ . '/../CollectionPostRepositoryTest.php';
 
 use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools;
 use Domain\Model\Post;
 
-class DoctrinePostRepositoryTest extends \PostRepositoryTest
+class DoctrinePostRepositoryTest extends \CollectionPostRepositoryTest
 {
     protected function createPostRepository()
     {
@@ -53,9 +53,9 @@ class DoctrinePostRepositoryTest extends \PostRepositoryTest
 
 class PrecociousDoctrinePostRepository extends DoctrinePostRepository
 {
-    public function persist(Post $aPost)
+    public function add(Post $aPost)
     {
-        parent::persist($aPost);
+        parent::add($aPost);
 
         $this->em->flush();
     }

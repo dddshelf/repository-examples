@@ -5,7 +5,7 @@ namespace Infrastructure\Persistence\Doctrine;
 use Doctrine\ORM\EntityManager;
 use Domain\Model\Post;
 use Domain\Model\PostId;
-use Domain\Model\PostRepository;
+use Domain\Model\CollectionPostRepository as PostRepository;
 
 class DoctrinePostRepository implements PostRepository
 {
@@ -16,7 +16,7 @@ class DoctrinePostRepository implements PostRepository
         $this->em = $em;
     }
 
-    public function persist(Post $aPost)
+    public function add(Post $aPost)
     {
         $this->em->persist($aPost);
     }

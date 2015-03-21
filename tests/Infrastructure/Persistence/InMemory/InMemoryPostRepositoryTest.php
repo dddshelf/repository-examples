@@ -2,11 +2,11 @@
 
 namespace Infrastructure\Persistence\Doctrine;
 
-require_once __DIR__ . '/../PostRepositoryTest.php';
+require_once __DIR__ . '/../CollectionPostRepositoryTest.php';
 
 use Infrastructure\Persistence\InMemory\InMemoryPostRepository;
 
-class InMemoryPostRepositoryTest extends \PostRepositoryTest
+class InMemoryPostRepositoryTest extends \CollectionPostRepositoryTest
 {
     protected function createPostRepository()
     {

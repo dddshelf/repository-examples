@@ -4,7 +4,7 @@ namespace Infrastructure\Persistence\Redis;
 
 use Domain\Model\Post;
 use Domain\Model\PostId;
-use Domain\Model\PostRepository;
+use Domain\Model\PersistentPostRepository as PostRepository;
 use Predis\Client;
 
 class RedisPostRepository implements PostRepository
@@ -16,7 +16,7 @@ class RedisPostRepository implements PostRepository
         $this->client = $client;
     }
 
-    public function persist(Post $aPost)
+    public function save(Post $aPost)
     {
         $this->client->hset('posts', (string) $aPost->id(), serialize($aPost));
     }

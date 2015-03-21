@@ -5,7 +5,7 @@ namespace Infrastructure\Persistence\Sql;
 use Domain\Model\Body;
 use Domain\Model\Post;
 use Domain\Model\PostId;
-use Domain\Model\PostRepository;
+use Domain\Model\PersistentPostRepository as PostRepository;
 
 class SqlPostRepository implements PostRepository
 {
@@ -18,7 +18,23 @@ class SqlPostRepository implements PostRepository
         $this->pdo = $pdo;
     }
 
-    public function persist(Post $aPost)
+    public function save(Post $aPost)
+    {
+        ($this->exist($aPost)) ? $this->update($aPost) : $this->insert($aPost);
+    }
+
+    private function exist(Post $aPost)
+    {
+        $count = $this
+            ->execute('SELECT COUNT(*) FROM posts WHERE id = :id', [
+                ':id' => $aPost->id()->id()
+            ])
+            ->fetchColumn();
+
+        return $count == 1;
+    }
+
+    private function insert(Post $aPost)
     {
         $sql = 'INSERT INTO posts (id, body, created_at) VALUES (:id, :body, :created_at)';
 
@@ -26,6 +42,16 @@ class SqlPostRepository implements PostRepository
             'id' => $aPost->id()->id(),
             'body' => $aPost->body()->content(),
             'created_at' => $aPost->createdAt()->format(self::DATE_FORMAT)
+        ]);
+    }
+
+    private function update(Post $aPost)
+    {
+        $sql = 'UPDATE posts SET body = :body WHERE id = :id';
+
+        $this->execute($sql, [
+            'id' => $aPost->id()->id(),
+            'body' => $aPost->body()->content()
         ]);
     }
 
@@ -104,8 +130,10 @@ class SqlPostRepository implements PostRepository
 
     public function size()
     {
-        return $this->pdo->query('SELECT COUNT(*) FROM posts')
-            ->fetchColumn();
+        return
+            $this->pdo
+                ->query('SELECT COUNT(*) FROM posts')
+                ->fetchColumn();
     }
 
     public function initSchema()

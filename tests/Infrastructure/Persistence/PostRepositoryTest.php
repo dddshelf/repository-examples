@@ -2,13 +2,14 @@
 
 use Domain\Model\Body;
 use Domain\Model\Post;
+use Domain\Model\PostId;
 
 abstract class PostRepositoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \Domain\Model\PostRepository
      */
-    private $postRepository;
+    protected $postRepository;
 
     public function setUp()
     {
@@ -16,6 +17,8 @@ abstract class PostRepositoryTest extends \PHPUnit_Framework_TestCase
     }
 
     abstract protected function createPostRepository();
+
+    abstract protected function persist(Post $post);
 
     /**
      * @test
@@ -29,23 +32,23 @@ abstract class PostRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertPostExist($post->id());
     }
 
-    private function assertPostExist($id)
+    protected function persistPost($body = 'irrelevant body', \DateTime $createdAt = null, PostId $id = null)
     {
-        $result = $this->postRepository->postOfId($id);
-        $this->assertNull($result);
-    }
-
-    private function persistPost($body = 'irrelevant body', \DateTime $createdAt = null)
-    {
-        $this->postRepository->persist(
+        $this->persist(
             $post = new Post(
-                $this->postRepository->nextIdentity(),
+                $id ?: $this->postRepository->nextIdentity(),
                 new Body($body),
                 $createdAt
             )
         );
 
         return $post;
+    }
+
+    private function assertPostExist($id)
+    {
+        $result = $this->postRepository->postOfId($id);
+        $this->assertNull($result);
     }
 
     /**

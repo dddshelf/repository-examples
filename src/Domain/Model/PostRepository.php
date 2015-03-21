@@ -4,8 +4,6 @@ namespace Domain\Model;
 
 interface PostRepository
 {
-    public function persist(Post $aPost);
-
     public function remove(Post $aPost);
 
     /**
