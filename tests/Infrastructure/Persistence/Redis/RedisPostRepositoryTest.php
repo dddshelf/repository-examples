@@ -15,4 +15,9 @@ class RedisPostRepositoryTest extends \PersistentPostRepositoryTest
 
         return new RedisPostRepository($client);
     }
+
+    protected function createLatestPostSpecification(\DateTime $since)
+    {
+        return new RedisLatestPostSpecification($since);
+    }
 }

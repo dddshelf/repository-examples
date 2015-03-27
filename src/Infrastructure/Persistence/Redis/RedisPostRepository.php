@@ -37,32 +37,18 @@ class RedisPostRepository implements PostRepository
 
     public function latestPosts(\DateTime $sinceADate)
     {
-        $latest = $this->filterPosts(
+        return $this->filterPosts(
             function(Post $post) use ($sinceADate) {
                 return $post->createdAt() > $sinceADate;
             }
         );
-
-        $this->sortByCreatedAt($latest);
-
-        return array_values($latest);
     }
 
     private function filterPosts(callable $fn)
     {
-        return array_filter(array_map(function($data) {
+        return array_values(array_filter(array_map(function($data) {
             return unserialize($data);
-        }, $this->client->hgetall('posts')), $fn);
-    }
-
-    private function sortByCreatedAt(&$posts)
-    {
-        usort($posts, function(Post $a, Post $b) {
-            if ($a->createdAt() == $b->createdAt()) {
-                return 0;
-            }
-            return ($a->createdAt() < $b->createdAt()) ? -1 : 1;
-        });
+        }, $this->client->hgetall('posts')), $fn));
     }
 
     /**

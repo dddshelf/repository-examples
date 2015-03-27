@@ -18,8 +18,6 @@ abstract class PostRepositoryTest extends \PHPUnit_Framework_TestCase
 
     abstract protected function createPostRepository();
 
-    abstract protected function persist(Post $post);
-
     /**
      * @test
      */
@@ -45,6 +43,8 @@ abstract class PostRepositoryTest extends \PHPUnit_Framework_TestCase
         return $post;
     }
 
+    abstract protected function persist(Post $post);
+
     private function assertPostExist($id)
     {
         $result = $this->postRepository->postOfId($id);
@@ -54,18 +54,32 @@ abstract class PostRepositoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function itShouldFetchLatestPosts()
+    public function itShouldFetchLatestPostsByMethod()
     {
+        $this->assertPostsAreFetchedWith(function() {
+            return $this->postRepository->latestPosts(new \DateTime('-24 hours'));
+        });
+    }
+
+    private function assertPostsAreFetchedWith(callable $fetchPostsFn) {
         $this->persistPost('a year ago', new \DateTime('-1 year'));
         $this->persistPost('a month ago', new \DateTime('-1 month'));
         $this->persistPost('few hours ago', new \DateTime('-3 hours'));
         $this->persistPost('few minutes ago', new \DateTime('-2 minutes'));
 
-        $posts = $this->postRepository->latestPosts(new \DateTime('-24 hours'));
+        $this->assertPostContentsEquals(['few hours ago', 'few minutes ago'], $fetchPostsFn());
+    }
 
-        $this->assertCount(2, $posts);
-        $this->assertEquals('few hours ago', $posts[0]->body()->content());
-        $this->assertEquals('few minutes ago', $posts[1]->body()->content());
+    private function assertPostContentsEquals($expectedContents, array $posts)
+    {
+        $postContents = array_map(function(Post $post) {
+            return $post->body()->content();
+        }, $posts);
+
+        $this->assertEquals(
+            array_diff($expectedContents, $postContents),
+            array_diff($postContents, $expectedContents)
+        );
     }
 
     /**
@@ -80,4 +94,18 @@ abstract class PostRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(2, $size);
     }
+
+    /**
+     * @test
+     */
+    public function itShouldFetchLatestPostsBySpecification()
+    {
+        $this->assertPostsAreFetchedWith(function() {
+            return $this->postRepository->query(
+                $this->createLatestPostSpecification(new \DateTime('-24 hours'))
+            );
+        });
+    }
+
+    abstract protected function createLatestPostSpecification(\DateTime $since);
 }

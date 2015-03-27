@@ -49,6 +49,11 @@ class DoctrinePostRepositoryTest extends \CollectionPostRepositoryTest
             $em->getClassMetadata('Domain\Model\Post')
         ]);
     }
+
+    protected function createLatestPostSpecification(\DateTime $since)
+    {
+        return new DoctrineLatestPostSpecification($since);
+    }
 }
 
 class PrecociousDoctrinePostRepository extends DoctrinePostRepository
