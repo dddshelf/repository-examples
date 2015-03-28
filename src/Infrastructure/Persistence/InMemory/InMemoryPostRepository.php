@@ -45,6 +45,8 @@ class InMemoryPostRepository implements PostRepository
 
     /**
      * @param InMemoryPostSpecification $specification
+     *
+     * @return Post[]
      */
     public function query($specification)
     {

@@ -44,6 +44,8 @@ class DoctrinePostRepository implements PostRepository
 
     /**
      * @param DoctrinePostSpecification $specification
+     *
+     * @return Post[]
      */
     public function query($specification)
     {
